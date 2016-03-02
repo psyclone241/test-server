@@ -1,5 +1,5 @@
 # Introduction
-Just a little setup to run a node server on any small project
+Just a little test project, implementing the node project, http-server
 
 # Requirements
 * npm
