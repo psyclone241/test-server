@@ -7,6 +7,7 @@ PID=`check_pid`
 if [ "$PID" != "" ];
 then
   echo "Killing http-server instance (PID: $PID) on port $PORT"
+  makeLogEntry "stop" "kill $PID"
   kill $PID
 else
   echo "No http-server instance on port $PORT"

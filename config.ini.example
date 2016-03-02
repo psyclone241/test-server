@@ -1,9 +1,22 @@
-LOG_DIRECTORY='./logs'
-WEB_DIRECTORY='./web'
-NODE_DIRECTORY="./node_modules"
+# The directory where the log files are stored
+LOG_DIRECTORY='logs'
+# The file used by the http-server to log traffic
+LOG_FILE='http.log'
+# The file used by this application to log what it is doing
+APP_LOG_FILE='app.log'
+# The directory served by the http-server
+WEB_DIRECTORY='web'
+# The directory where your node modules are located
+NODE_DIRECTORY="node_modules"
+# http or https
 PROTOCOL='http'
+# localhost or some local IP address
 HOST='localhost'
-PORT='9110'
+# Port number, duh!
+PORT=9200
+# Allow listing of files, if no index is present
 DIRECTORY_LISTING=false
-AUTO_INDEX=false
+# Automatically redirect to index.html
+AUTO_INDEX=true
+# Open a web browser automatically after spawning the service
 OPEN_BROWSER=true

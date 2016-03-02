@@ -2,11 +2,7 @@
 source config.ini
 source scripts/functions.sh
 
-if [ ! -d "$LOG_DIRECTORY" ];
-then
-	echo "Creating a logs directory at $LOG_DIRECTORY"
-	mkdir $LOG_DIRECTORY
-fi
+checkForLogDirectory
 
 echo "Checking for http-server instance"
 PID=`check_pid`
@@ -30,10 +26,12 @@ then
 				else
 					FLAGS="-S"
 				fi
-				./node_modules/http-server/bin/http-server $FLAGS -d $DIRECTORY_LISTING -i $AUTO_INDEX -p $PORT $WEB_DIRECTORY > $LOG_DIRECTORY/$PROTOCOL.log &
+				makeLogEntry "start" "./$NODE_DIRECTORY/http-server/bin/http-server $FLAGS -d $DIRECTORY_LISTING -i $AUTO_INDEX -p $PORT $WEB_DIRECTORY > $LOG_DIRECTORY/$LOG_FILE &"
+				./$NODE_DIRECTORY/http-server/bin/http-server $FLAGS -d $DIRECTORY_LISTING -i $AUTO_INDEX -p $PORT $WEB_DIRECTORY > $LOG_DIRECTORY/$LOG_FILE &
 
 				if [ "$OPEN_BROWSER" == "true" ];
 				then
+					makeLogEntry "start" "python -mwebbrowser $PROTOCOL://$HOST:$PORT >/dev/null 2>&1"
 					python -mwebbrowser $PROTOCOL://$HOST:$PORT >/dev/null 2>&1
 				else
 					echo "Your site is running, direct your browser to $PROTOCOL://$HOST:$PORT"
