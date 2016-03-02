@@ -1,16 +1,20 @@
 # Introduction
 Just a little setup to run a node server on any small project
+
 # Requirements
 * npm
 * npm packages:
   * http-server
 * make
+
 # Installation
 <pre>npm install</pre>
+
 # Configuration
 * Copy config.ini.example to config.ini
 <pre>cp config.ini.example config.ini</pre>
 * Edit your new config.ini file for your preferences
+
 # Usage
 * Show your options
 <pre>make</pre>
