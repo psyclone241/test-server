@@ -1,5 +1,6 @@
 #!/usr/bin/env bash
-PORT='9110'
+source scripts/config.ini
+source scripts/functions.sh
 
 echo "Checking for http-server instance on port $PORT"
 PID=`bash scripts/check.sh $PORT`
