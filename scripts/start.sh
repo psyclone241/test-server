@@ -1,5 +1,5 @@
 #!/usr/bin/env bash
-source scripts/config.ini
+source config.ini
 source scripts/functions.sh
 
 if [ ! -d "$LOG_DIRECTORY" ];

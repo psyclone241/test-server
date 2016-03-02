@@ -1,5 +1,5 @@
 #!/usr/bin/env bash
-source scripts/config.ini
+source config.ini
 source scripts/functions.sh
 
 echo "Checking for http-server instance on port $PORT"
