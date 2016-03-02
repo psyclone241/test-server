@@ -7,6 +7,8 @@ help:
 	@echo "\tstart - start the http-server instance, export the logs, and background the process"
 	@echo "\tstop - find and kill the http-server instance"
 	@echo "\trestart - find and kill the http-server instance, then start a new one"
+	@echo "\tport - find any services running on the configured por"
+	@echo "\tpid - find the PID of any http-server instance running"
 
 start:
 	@bash scripts/start.sh
@@ -17,5 +19,8 @@ stop:
 restart:
 	@bash scripts/restart.sh
 
-check:
-	@bash scripts/check.sh $PORT
+port:
+	@bash scripts/run.sh port
+
+pid:
+	@bash scripts/run.sh pid

@@ -8,20 +8,20 @@ then
 	mkdir $LOG_DIRECTORY
 fi
 
-echo "Checking for http-server instance on port $PORT"
-PID=`bash scripts/check.sh $PORT`
+echo "Checking for http-server instance"
+PID=`check_pid`
+echo "Checking for another process running on port $PORT"
+LIVE_PORT=`check_port`
 
-NPM_IS_INSTALLED=`program_is_installed npm`
-
-if [ "$NPM_IS_INSTALLED" == "1" ];
+if [ "$PID" == "" ] && [ "$LIVE_PORT" == "" ];
 then
-
-	if [ -d "$NODE_DIRECTORY" ];
+	NPM_IS_INSTALLED=`program_is_installed npm`
+	if [ "$NPM_IS_INSTALLED" == "1" ];
 	then
-		HTTP_SERVER_IS_INSTALLED=`npm_package_is_installed $NODE_DIRECTORY http-server`
-		if [ "$HTTP_SERVER_IS_INSTALLED" == "1" ];
+		if [ -d "$NODE_DIRECTORY" ];
 		then
-			if [ "$PID" == "" ];
+			HTTP_SERVER_IS_INSTALLED=`npm_package_is_installed $NODE_DIRECTORY http-server`
+			if [ "$HTTP_SERVER_IS_INSTALLED" == "1" ];
 			then
 				echo "Starting http-server instance at $PROTOCOL://$HOST:$PORT"
 				if [ "$PROTOCOL" == "http" ];
@@ -31,17 +31,30 @@ then
 					FLAGS="-S"
 				fi
 				./node_modules/http-server/bin/http-server $FLAGS -d $DIRECTORY_LISTING -i $AUTO_INDEX -p $PORT $WEB_DIRECTORY > $LOG_DIRECTORY/$PROTOCOL.log &
-			else
-				echo "There is already an http-server instance running at $PROTOCOL://$HOST:$PORT"
-			fi
 
-			python -mwebbrowser $PROTOCOL://$HOST:$PORT >/dev/null 2>&1
+				if [ "$OPEN_BROWSER" == "true" ];
+				then
+					python -mwebbrowser $PROTOCOL://$HOST:$PORT >/dev/null 2>&1
+				else
+					echo "Your site is running, direct your browser to $PROTOCOL://$HOST:$PORT"
+				fi
+			else
+				echo "You need to install the npm package http-server, npm install will install the requirements from package.json"
+			fi
 		else
-			echo "You need to install the npm package http-server, npm install will install the requirements from package.json"
+			echo "There are no node modules installed here, perhaps you need to run, npm install"
 		fi
 	else
-		echo "There are no node modules installed here, perhaps you need to run, npm install"
+		echo 'You need to install npm'
 	fi
 else
-	echo 'You need to install npm'
+	if [ "$PID" != "" ];
+	then
+		echo "There is already an http-server instance running at $PROTOCOL://$HOST:$PORT"
+	fi
+
+	if [ "$LIVE_PORT" != "" ];
+	then
+		echo "There is another service on port $PORT -> $LIVE_PORT"
+	fi
 fi

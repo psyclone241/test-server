@@ -2,8 +2,8 @@
 source config.ini
 source scripts/functions.sh
 
-echo "Checking for http-server instance on port $PORT"
-PID=`bash scripts/check.sh $PORT`
+echo "Checking for http-server instance"
+PID=${check_process}
 if [ "$PID" != "" ];
 then
   echo "Killing http-server instance (PID: $PID) on port $PORT"
