@@ -2,7 +2,7 @@
 source config.ini
 source scripts/functions.sh
 
-checkForLogDirectory
+checkForDirectory "$LOG_DIRECTORY"
 
 echo "Checking for http-server instance"
 PID=`check_pid`
@@ -26,6 +26,9 @@ then
 				else
 					FLAGS="-S"
 				fi
+
+				checkForDirectory "$WEB_DIRECTORY"
+
 				makeLogEntry "start" "./$NODE_DIRECTORY/http-server/bin/http-server $FLAGS -d $DIRECTORY_LISTING -i $AUTO_INDEX -p $PORT $WEB_DIRECTORY > $LOG_DIRECTORY/$LOG_FILE &"
 				./$NODE_DIRECTORY/http-server/bin/http-server $FLAGS -d $DIRECTORY_LISTING -i $AUTO_INDEX -p $PORT $WEB_DIRECTORY > $LOG_DIRECTORY/$LOG_FILE &
 

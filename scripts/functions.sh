@@ -32,17 +32,16 @@ function check_port {
   fi
 }
 
-function checkForLogDirectory {
-  if [ ! -d "$LOG_DIRECTORY" ];
+function checkForDirectory {
+  if [ ! -d "$1" ];
   then
-  	echo "Creating a logs directory at $LOG_DIRECTORY"
-  	logEntry "checkForLogDirectory" "mkdir $LOG_DIRECTORY"
-  	mkdir $LOG_DIRECTORY
+  	echo "Creating a directory at $1"
+  	makeLogEntry "checkForDirectory" "mkdir -p $1"
+  	mkdir -p $1
   fi
 }
 
 function makeLogEntry {
-  checkForLogDirectory
   date=`date +"%Y%m%d%H%M%S"`
   echo -e "[$date]\t\t[$1]\t\t$2" >> $LOG_DIRECTORY/$APP_LOG_FILE
 }
