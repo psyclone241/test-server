@@ -11,7 +11,7 @@ function respondInColor {
     fi
   else
     color=${TXT_RED}
-    if [ "$2" == "1" ];
+    if [ "$2" == "0" ];
     then
       status="failed"
     else
