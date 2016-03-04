@@ -1,4 +1,11 @@
 #!/usr/bin/env bash
+if [ ! -f "tests/config.ini" ];
+then
+  echo "Test Configuration missing in tests"
+  echo "Try: cp tests/config.ini.example tests/config.ini"
+  exit
+fi
+
 source tests/config.ini
 source tests/functions.sh
 
