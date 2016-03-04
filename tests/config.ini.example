@@ -1,0 +1,14 @@
+# Configuration file location
+CONFIG_FILE='config.ini'
+# Code for Plain Green Text
+TXT_GREEN=$(tput setaf 2)
+# Code for Plain Red Text
+TXT_RED=$(tput setaf 1)
+# Code for resetting the color after use
+TXT_RESET=$(tput sgr0)
+# Define the COLUMNS for calculation
+COLUMNS=$(tput cols)
+# Left Side Column
+COL1="60"
+# Right Side Column
+COL2=$(($COLUMNS - $COL1))
