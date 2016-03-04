@@ -36,3 +36,9 @@ Just a little test project, implementing the node project, http-server
 # Testing
 * Run full test suite
 <pre>make test</pre>
+
+# TODO List
+* Make configuration editor inside of 'make config'
+* Make configuration editor inside of 'make testconfig'
+* Add testing for each individual method, so that they can be run
+independent of 'make test'
