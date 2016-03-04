@@ -27,10 +27,22 @@ then
 					FLAGS="-S"
 				fi
 
-				checkForDirectory "$WEB_DIRECTORY"
-				if [ "$ACTIVE_SITE" == "false" ];
+				checking_directory=`checkForDirectory "$WEB_DIRECTORY"`
+				if [ "$checking_directory" != "" ];
 				then
-					copyTemplate $TEMPLATE
+					if [ "$ACTIVE_SITE" == "false" ];
+					then
+						copyTemplate $TEMPLATE
+					fi
+				else
+					while true; do
+				    read -p "Do you wish to copy web template ($TEMPLATE) over your current $WEB_DIRECTORY contents? [y/N]" yn
+				    case $yn in
+			        [Yy]* ) removeWeb; copyTemplate $TEMPLATE; break;;
+			        [Nn]* ) break;;
+			        * ) break;;
+				    esac
+					done
 				fi
 
 				makeLogEntry "start" "./$NODE_DIRECTORY/http-server/bin/http-server $FLAGS -d $DIRECTORY_LISTING -i $AUTO_INDEX -p $PORT $WEB_DIRECTORY > $LOG_DIRECTORY/$LOG_FILE &"

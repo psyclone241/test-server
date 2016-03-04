@@ -49,3 +49,14 @@ function makeLogEntry {
 function copyTemplate {
   cp -R ./templates/$1/* $WEB_DIRECTORY/
 }
+
+function removeWeb {
+  while true; do
+    read -p "Removing files from $WEB_DIRECTORY/*, continue? [y/N]" yn
+    case $yn in
+      [Yy]* ) rm -fR $WEB_DIRECTORY/*; break;;
+      [Nn]* ) break;;
+      * ) break;;
+    esac
+  done
+}
