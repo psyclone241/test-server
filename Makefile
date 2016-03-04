@@ -9,6 +9,7 @@ help:
 	@echo "\trestart - find and kill the http-server instance, then start a new one"
 	@echo "\tport - find any services running on the configured por"
 	@echo "\tpid - find the PID of any http-server instance running"
+	@echo "\ttest - run the testing suites"
 
 start:
 	@bash scripts/start.sh
@@ -24,3 +25,8 @@ port:
 
 pid:
 	@bash scripts/run.sh pid
+
+test:
+	@bash tests/test_config.sh
+	@bash tests/test_port.sh
+	@bash tests/test_pid.sh
