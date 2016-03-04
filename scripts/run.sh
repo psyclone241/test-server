@@ -34,20 +34,22 @@ then
   then
     if [ -f "config.ini" ];
     then
-      echo 'Updating your config file'
+      echo "Updating your config file"
+      echo "TODO: Add configuration editor"
     else
-      echo 'Making a new config file'
+      echo "Making a new config file"
       cp config.ini.example config.ini
     fi
   else
     if [ -f "tests/config.ini" ];
     then
-      echo 'Updating your tests/config file'
+      echo "Updating your tests/config file"
+      echo "TODO: Add test configuration editor"
     else
-      echo 'Making a new tests/config file'
+      echo "Making a new tests/config file"
       cp tests/config.ini.example tests/config.ini
     fi
   fi
 else
-  echo 'No command by that name'
+  echo "No command by that name"
 fi
