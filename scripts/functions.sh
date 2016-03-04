@@ -1,5 +1,4 @@
 #!/usr/bin/env bash
-
 function program_is_installed {
   makeLogEntry "program_is_installed" "type $1 >/dev/null 2>&1 || { local return_=0; }"
   local return_=1

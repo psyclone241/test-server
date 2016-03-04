@@ -1,6 +1,10 @@
 #!/usr/bin/env bash
-source config.ini
-source scripts/functions.sh
+if [ "$1" == "config" ];
+then
+  source scripts/functions.sh
+else
+  source scripts/config_check.sh
+fi
 
 if [ "$1" == "port" ];
 then
@@ -11,9 +15,7 @@ then
   else
     echo "No service running on $PORT"
   fi
-fi
-
-if [ "$1" == "pid" ];
+elif [ "$1" == "pid" ];
 then
   PID=`check_pid`
   if [ "$PID" != "" ];
@@ -22,5 +24,14 @@ then
   else
     echo "No http-server running"
   fi
-
+elif [ "$1" == "config" ];
+then
+  if [ -f "config.ini" ];
+  then
+    echo 'Updating your config file'
+  else
+    echo 'Making a new config file'
+  fi
+else
+  echo 'No command by that name'
 fi

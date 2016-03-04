@@ -1,6 +1,5 @@
 #!/usr/bin/env bash
-source config.ini
-source scripts/functions.sh
+source scripts/config_check.sh
 
 checkForDirectory "$LOG_DIRECTORY"
 
