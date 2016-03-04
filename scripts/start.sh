@@ -28,6 +28,10 @@ then
 				fi
 
 				checkForDirectory "$WEB_DIRECTORY"
+				if [ "$ACTIVE_SITE" == "false" ];
+				then
+					copyTemplate $TEMPLATE
+				fi
 
 				makeLogEntry "start" "./$NODE_DIRECTORY/http-server/bin/http-server $FLAGS -d $DIRECTORY_LISTING -i $AUTO_INDEX -p $PORT $WEB_DIRECTORY > $LOG_DIRECTORY/$LOG_FILE &"
 				./$NODE_DIRECTORY/http-server/bin/http-server $FLAGS -d $DIRECTORY_LISTING -i $AUTO_INDEX -p $PORT $WEB_DIRECTORY > $LOG_DIRECTORY/$LOG_FILE &

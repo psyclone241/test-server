@@ -45,3 +45,7 @@ function makeLogEntry {
   date=`date +"%Y%m%d%H%M%S"`
   echo -e "[$date]\t\t[$1]\t\t$2" >> $LOG_DIRECTORY/$APP_LOG_FILE
 }
+
+function copyTemplate {
+  cp -R ./templates/$1/* $WEB_DIRECTORY/
+}
