@@ -28,3 +28,7 @@ Just a little test project, implementing the node project, http-server
 <pre>make pid</pre>
 * Show any service on the port specified in config.ini
 <pre>make port</pre>
+
+# Testing
+* Run full test suite
+<pre>make test</pre>
