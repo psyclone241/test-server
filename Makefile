@@ -15,6 +15,9 @@ help:
 config:
 	@bash scripts/run.sh config
 
+testconfig:
+	@bash scripts/run.sh testconfig
+
 start:
 	@bash scripts/start.sh
 
