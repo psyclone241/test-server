@@ -1,12 +1,15 @@
 #!/usr/bin/env bash
-if [ "$1" == "config" ];
+
+command_chosen=$1
+
+if [ "$command_chosen" == "config" ];
 then
   source scripts/functions.sh
 else
   source scripts/config_check.sh
 fi
 
-if [ "$1" == "port" ];
+if [ "$command_chosen" == "port" ];
 then
   LIVE_PORT=`check_port`
   if [ "$LIVE_PORT" != "" ];
@@ -15,7 +18,7 @@ then
   else
     echo "No service running on $PORT"
   fi
-elif [ "$1" == "pid" ];
+elif [ "$command_chosen" == "pid" ];
 then
   PID=`check_pid`
   if [ "$PID" != "" ];
@@ -24,14 +27,29 @@ then
   else
     echo "No http-server running"
   fi
-elif [ "$1" == "config" ];
+elif [ "$command_chosen" == "config" ] || [ "$command_chosen" == "testconfig" ];
 then
-  if [ -f "config.ini" ];
+
+  if [ "$command_chosen" == "config" ];
   then
-    echo 'Updating your config file'
+    if [ -f "config.ini" ];
+    then
+      echo "Updating your config file"
+      echo "TODO: Add configuration editor"
+    else
+      echo "Making a new config file"
+      cp config.ini.example config.ini
+    fi
   else
-    echo 'Making a new config file'
+    if [ -f "tests/config.ini" ];
+    then
+      echo "Updating your tests/config file"
+      echo "TODO: Add test configuration editor"
+    else
+      echo "Making a new tests/config file"
+      cp tests/config.ini.example tests/config.ini
+    fi
   fi
 else
-  echo 'No command by that name'
+  echo "No command by that name"
 fi

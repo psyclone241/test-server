@@ -5,6 +5,7 @@
 help:
 	@echo "Available tasks :"
 	@echo "\tconfig - make or update a configuration file"
+	@echo "\ttestconfig - make or update a test configuration file"
 	@echo "\tstart - start the http-server instance, export the logs, and background the process"
 	@echo "\tstop - find and kill the http-server instance"
 	@echo "\trestart - find and kill the http-server instance, then start a new one"
@@ -14,6 +15,9 @@ help:
 
 config:
 	@bash scripts/run.sh config
+
+testconfig:
+	@bash scripts/run.sh testconfig
 
 start:
 	@bash scripts/start.sh

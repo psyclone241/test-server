@@ -18,6 +18,10 @@ Just a little test project, implementing the node project, http-server
 # Usage
 * Show your options
 <pre>make</pre>
+* Configure your server or create a new config
+<pre>make config</pre>
+* Configure your test suite or create a new test config
+<pre>make testconfig</pre>
 * Run your server
 <pre>make start</pre>
 * Stop your server
