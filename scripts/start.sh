@@ -27,7 +27,7 @@ then
 				fi
 
 				checking_directory=`checkForDirectory "$WEB_DIRECTORY"`
-				if [ "$checking_directory" != "" ];
+				if [ "$checking_directory" == "" ];
 				then
 					if [ "$ACTIVE_SITE" == "false" ];
 					then
