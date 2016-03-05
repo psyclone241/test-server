@@ -42,3 +42,4 @@ Just a little test project, implementing the node project, http-server
 * Make configuration editor inside of 'make testconfig'
 * Add testing for each individual method, so that they can be run
 independent of 'make test'
+* Add ability to use other server types, such as python SimpleHTTPServer
