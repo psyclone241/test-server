@@ -128,9 +128,9 @@ function startService {
   	fi
   elif [ "$HOST_SERVICE" == "pythonSimpleHTTPServer" ];
   then
-    makeLogEntry "start" "pushd $WEB_DIRECTORY python -m SimpleHTTPServer $PORT > $LOG_DIRECTORY/$LOG_FILE & popd"
+    makeLogEntry "start" "cd $WEB_DIRECTORY; python -m SimpleHTTPServer $PORT > $LOG_DIRECTORY/$LOG_FILE 2>&1"
     cd $WEB_DIRECTORY
-    python -m SimpleHTTPServer $PORT > $LOG_DIRECTORY/$LOG_FILE 2>&1 &
+    python -m SimpleHTTPServer $PORT > /dev/null 2>&1 &
   else
     echo "No service type was chosen, or selected option [$HOST_SERVICE] is not currently supported"
   fi
