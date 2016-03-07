@@ -16,4 +16,6 @@ else
   fi
   source tests/config.ini
   source tests/functions.sh
+  source scripts/functions.sh
+  checkForDirectory "$LOG_DIRECTORY"
 fi

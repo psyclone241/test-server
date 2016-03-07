@@ -1,14 +1,22 @@
 # Introduction
-Just a little test project, implementing the node project, http-server
+Just a little test project, implementing the node project, http-server by default,
+but it can also be used to setup a test service with the python SimpleHTTPServer
 
-# Requirements
+# Requirements (if default http-server used)
 * npm
 * npm packages:
   * http-server
 * make
 
-# Installation
+# Requirements (if python service used)
+* make
+* python (version >= 2.7)
+
+# Installation (if default http-server used)
 <pre>npm install</pre>
+
+# Installation (if python service used)
+* There is no pre-use install for this option
 
 # Configuration
 * Copy config.ini.example to config.ini
@@ -42,4 +50,3 @@ Just a little test project, implementing the node project, http-server
 * Make configuration editor inside of 'make testconfig'
 * Add testing for each individual method, so that they can be run
 independent of 'make test'
-* Add ability to use other server types, such as python SimpleHTTPServer

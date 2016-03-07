@@ -7,20 +7,25 @@ APP_LOG_FILE='app.log'
 # The directory served by the http-server
 WEB_DIRECTORY='web'
 # Is there an active site in this directory or no
-ACTIVE_SITE=false
+ACTIVE_SITE=true
 # Which template to copy from
-TEMPLATE="1"
-# The directory where your node modules are located
-NODE_DIRECTORY="node_modules"
+TEMPLATE="2"
+# Define which service is to be used
+#HOST_SERVICE='http-server'
+HOST_SERVICE='pythonSimpleHTTPServer'
 # http or https
 PROTOCOL='http'
-# localhost or some local IP address
+# Host name, used simple for logging at this time
 HOST='localhost'
 # Port number, duh!
-PORT=9200
+PORT=8080
+# Open a web browser automatically after spawning the service
+OPEN_BROWSER=true
+
+# These configuration options are used if you chose http-server
+# The directory where your node modules are located
+NODE_DIRECTORY="node_modules"
 # Allow listing of files, if no index is present
 DIRECTORY_LISTING=false
 # Automatically redirect to index.html
 AUTO_INDEX=true
-# Open a web browser automatically after spawning the service
-OPEN_BROWSER=true
