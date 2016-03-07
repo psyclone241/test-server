@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 source scripts/config_check.sh
 
-echo "Checking for http-server instance"
+echo "Checking for $HOST_SERVICE instance"
 PID=`check_pid`
 echo "Checking for another process running on port $PORT"
 LIVE_PORT=`check_port`

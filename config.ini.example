@@ -5,19 +5,20 @@ LOG_FILE='http.log'
 # The file used by this application to log what it is doing
 APP_LOG_FILE='app.log'
 # The directory served by the http-server
-WEB_DIRECTORY='/home/keyes/git/myLittleToolset/dist'
+WEB_DIRECTORY='web'
 # Is there an active site in this directory or no
 ACTIVE_SITE=true
 # Which template to copy from
 TEMPLATE="2"
 # Define which service is to be used
-HOST_SERVICE='http-server'
+#HOST_SERVICE='http-server'
+HOST_SERVICE='pythonSimpleHTTPServer'
 # http or https
 PROTOCOL='http'
 # Host name, used simple for logging at this time
 HOST='localhost'
 # Port number, duh!
-PORT=9200
+PORT=8080
 # Open a web browser automatically after spawning the service
 OPEN_BROWSER=true
 

@@ -14,12 +14,23 @@ function npm_package_is_installed {
 }
 
 function check_pid {
+  if [ "$HOST_SERVICE" == "http-server" ];
+  then
     makeLogEntry "check_pid" "ps aux | grep "[h]ttp-server" | awk '{print $2}'"
     PID=`ps aux | grep "[h]ttp-server" | awk '{print $2}'`
     if [ "$PID" != "" ];
     then
       echo $PID
     fi
+  elif [ "$HOST_SERVICE" == "pythonSimpleHTTPServer" ];
+  then
+    makeLogEntry "check_pid" "ps aux | grep "[S]impleHTTPServer" | awk '{print $2}'"
+    PID=`ps aux | grep "[S]impleHTTPServer" | awk '{print $2}'`
+    if [ "$PID" != "" ];
+    then
+      echo $PID
+    fi
+  fi
 }
 
 function check_port {
@@ -37,6 +48,15 @@ function checkForDirectory {
   	echo "Creating a directory at $1"
   	mkdir -p $1
     makeLogEntry "checkForDirectory" "mkdir -p $1"
+  fi
+}
+
+function checkForFile {
+  if [ ! -f "$1" ];
+  then
+  	echo "Creating a file at $1"
+  	touch $1
+    makeLogEntry "checkForFile" "touch $1"
   fi
 }
 
@@ -74,6 +94,9 @@ function startBrowser {
 }
 
 function startService {
+  checkForDirectory $LOG_DIRECTORY
+  checkForFile $LOG_DIRECTORY/$LOG_FILE
+
   if [ "$HOST_SERVICE" == "http-server" ];
   then
     NPM_IS_INSTALLED=`program_is_installed npm`
@@ -93,7 +116,7 @@ function startService {
   				fi
 
           makeLogEntry "start" "./$NODE_DIRECTORY/http-server/bin/http-server $FLAGS -d $DIRECTORY_LISTING -i $AUTO_INDEX -p $PORT $WEB_DIRECTORY > $LOG_DIRECTORY/$LOG_FILE &"
-          ./$NODE_DIRECTORY/http-server/bin/http-server $FLAGS -d $DIRECTORY_LISTING -i $AUTO_INDEX -p $PORT $WEB_DIRECTORY > $LOG_DIRECTORY/$LOG_FILE &
+          ./$NODE_DIRECTORY/http-server/bin/http-server $FLAGS -d $DIRECTORY_LISTING -i $AUTO_INDEX -p $PORT $WEB_DIRECTORY >> $LOG_DIRECTORY/$LOG_FILE &
   			else
   				echo "You need to install the npm package http-server, npm install will install the requirements from package.json"
   			fi
@@ -105,8 +128,9 @@ function startService {
   	fi
   elif [ "$HOST_SERVICE" == "pythonSimpleHTTPServer" ];
   then
-    makeLogEntry "start" "pushd $WEB_DIRECTORY; python -m SimpleHTTPServer $PORT; popd;"
-    pushd $WEB_DIRECTORY; python -m SimpleHTTPServer $PORT; popd;
+    makeLogEntry "start" "pushd $WEB_DIRECTORY python -m SimpleHTTPServer $PORT > $LOG_DIRECTORY/$LOG_FILE & popd"
+    cd $WEB_DIRECTORY
+    python -m SimpleHTTPServer $PORT > $LOG_DIRECTORY/$LOG_FILE 2>&1 &
   else
     echo "No service type was chosen, or selected option [$HOST_SERVICE] is not currently supported"
   fi
