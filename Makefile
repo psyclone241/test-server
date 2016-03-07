@@ -6,11 +6,11 @@ help:
 	@echo "Available tasks :"
 	@echo "\tconfig - make or update a configuration file"
 	@echo "\ttestconfig - make or update a test configuration file"
-	@echo "\tstart - start the http-server instance, export the logs, and background the process"
-	@echo "\tstop - find and kill the http-server instance"
-	@echo "\trestart - find and kill the http-server instance, then start a new one"
+	@echo "\tstart - start the service instance, export the logs, and background the process"
+	@echo "\tstop - find and kill the service instance"
+	@echo "\trestart - find and kill the service instance, then start a new one"
 	@echo "\tport - find any services running on the configured por"
-	@echo "\tpid - find the PID of any http-server instance running"
+	@echo "\tpid - find the PID of any service instance running"
 	@echo "\ttest - run the testing suites"
 
 config:

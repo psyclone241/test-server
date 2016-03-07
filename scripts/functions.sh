@@ -73,33 +73,42 @@ function startBrowser {
 }
 
 function startService {
-  NPM_IS_INSTALLED=`program_is_installed npm`
-	if [ "$NPM_IS_INSTALLED" == "1" ];
-	then
-		if [ -d "$NODE_DIRECTORY" ];
-		then
-			HTTP_SERVER_IS_INSTALLED=`npm_package_is_installed $NODE_DIRECTORY http-server`
-			if [ "$HTTP_SERVER_IS_INSTALLED" == "1" ];
-			then
-				echo "Starting http-server instance at $PROTOCOL://$HOST:$PORT"
-				if [ "$PROTOCOL" == "http" ];
-				then
-					FLAGS=""
-				else
-					FLAGS="-S"
-				fi
+  if [ "$HOST_SERVICE" == "http-server" ];
+  then
+    NPM_IS_INSTALLED=`program_is_installed npm`
+  	if [ "$NPM_IS_INSTALLED" == "1" ];
+  	then
+  		if [ -d "$NODE_DIRECTORY" ];
+  		then
+  			HTTP_SERVER_IS_INSTALLED=`npm_package_is_installed $NODE_DIRECTORY http-server`
+  			if [ "$HTTP_SERVER_IS_INSTALLED" == "1" ];
+  			then
+  				echo "Starting http-server instance at $PROTOCOL://$HOST:$PORT"
+  				if [ "$PROTOCOL" == "http" ];
+  				then
+  					FLAGS=""
+  				else
+  					FLAGS="-S"
+  				fi
 
-        makeLogEntry "start" "./$NODE_DIRECTORY/http-server/bin/http-server $FLAGS -d $DIRECTORY_LISTING -i $AUTO_INDEX -p $PORT $WEB_DIRECTORY > $LOG_DIRECTORY/$LOG_FILE &"
-        ./$NODE_DIRECTORY/http-server/bin/http-server $FLAGS -d $DIRECTORY_LISTING -i $AUTO_INDEX -p $PORT $WEB_DIRECTORY > $LOG_DIRECTORY/$LOG_FILE &
-			else
-				echo "You need to install the npm package http-server, npm install will install the requirements from package.json"
-			fi
-		else
-			echo "There are no node modules installed here, perhaps you need to run, npm install"
-		fi
-	else
-		echo 'You need to install npm'
-	fi
+          makeLogEntry "start" "./$NODE_DIRECTORY/http-server/bin/http-server $FLAGS -d $DIRECTORY_LISTING -i $AUTO_INDEX -p $PORT $WEB_DIRECTORY > $LOG_DIRECTORY/$LOG_FILE &"
+          ./$NODE_DIRECTORY/http-server/bin/http-server $FLAGS -d $DIRECTORY_LISTING -i $AUTO_INDEX -p $PORT $WEB_DIRECTORY > $LOG_DIRECTORY/$LOG_FILE &
+  			else
+  				echo "You need to install the npm package http-server, npm install will install the requirements from package.json"
+  			fi
+  		else
+  			echo "There are no node modules installed here, perhaps you need to run, npm install"
+  		fi
+  	else
+  		echo 'You need to install npm'
+  	fi
+  elif [ "$HOST_SERVICE" == "pythonSimpleHTTPServer" ];
+  then
+    makeLogEntry "start" "pushd $WEB_DIRECTORY; python -m SimpleHTTPServer $PORT; popd;"
+    pushd $WEB_DIRECTORY; python -m SimpleHTTPServer $PORT; popd;
+  else
+    echo "No service type was chosen, or selected option [$HOST_SERVICE] is not currently supported"
+  fi
 }
 
 function stopService {
