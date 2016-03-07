@@ -35,12 +35,13 @@ function checkForDirectory {
   if [ ! -d "$1" ];
   then
   	echo "Creating a directory at $1"
-  	makeLogEntry "checkForDirectory" "mkdir -p $1"
   	mkdir -p $1
+    makeLogEntry "checkForDirectory" "mkdir -p $1"
   fi
 }
 
 function makeLogEntry {
+  checkForDirectory "$LOG_DIRECTORY"
   date=`date +"%Y%m%d%H%M%S"`
   echo -e "[$date]\t\t[$1]\t\t$2" >> $LOG_DIRECTORY/$APP_LOG_FILE
 }

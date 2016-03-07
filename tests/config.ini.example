@@ -1,5 +1,7 @@
 # Configuration file location
 CONFIG_FILE='config.ini'
+# The directory where the log files are stored
+LOG_DIRECTORY='logs'
 # Code for Plain Green Text
 TXT_GREEN=$(tput setaf 2)
 # Code for Plain Red Text

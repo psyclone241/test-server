@@ -1,8 +1,6 @@
 #!/usr/bin/env bash
 source scripts/config_check.sh
 
-checkForDirectory "$LOG_DIRECTORY"
-
 echo "Checking for http-server instance"
 PID=`check_pid`
 echo "Checking for another process running on port $PORT"

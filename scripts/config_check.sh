@@ -16,4 +16,5 @@ else
   fi
   source config.ini
   source scripts/functions.sh
+  checkForDirectory "$LOG_DIRECTORY"
 fi
