@@ -11,8 +11,7 @@ ACTIVE_SITE=true
 # Which template to copy from
 TEMPLATE="2"
 # Define which service is to be used
-#HOST_SERVICE='http-server'
-HOST_SERVICE='pythonSimpleHTTPServer'
+HOST_SERVICE='http-server'
 # http or https
 PROTOCOL='http'
 # Host name, used simple for logging at this time
