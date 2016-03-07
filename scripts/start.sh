@@ -10,59 +10,26 @@ LIVE_PORT=`check_port`
 
 if [ "$PID" == "" ] && [ "$LIVE_PORT" == "" ];
 then
-	NPM_IS_INSTALLED=`program_is_installed npm`
-	if [ "$NPM_IS_INSTALLED" == "1" ];
+	checking_directory=`checkForDirectory "$WEB_DIRECTORY"`
+	if [ "$checking_directory" == "" ];
 	then
-		if [ -d "$NODE_DIRECTORY" ];
+		if [ "$ACTIVE_SITE" == "false" ];
 		then
-			HTTP_SERVER_IS_INSTALLED=`npm_package_is_installed $NODE_DIRECTORY http-server`
-			if [ "$HTTP_SERVER_IS_INSTALLED" == "1" ];
-			then
-				echo "Starting http-server instance at $PROTOCOL://$HOST:$PORT"
-				if [ "$PROTOCOL" == "http" ];
-				then
-					FLAGS=""
-				else
-					FLAGS="-S"
-				fi
-
-				checking_directory=`checkForDirectory "$WEB_DIRECTORY"`
-				if [ "$checking_directory" == "" ];
-				then
-					if [ "$ACTIVE_SITE" == "false" ];
-					then
-						copyTemplate $TEMPLATE
-					fi
-				else
-					while true; do
-				    read -p "Do you wish to copy web template ($TEMPLATE) over your current $WEB_DIRECTORY contents? [y/N]" yn
-				    case $yn in
-			        [Yy]* ) removeWeb; copyTemplate $TEMPLATE; break;;
-			        [Nn]* ) break;;
-			        * ) break;;
-				    esac
-					done
-				fi
-
-				makeLogEntry "start" "./$NODE_DIRECTORY/http-server/bin/http-server $FLAGS -d $DIRECTORY_LISTING -i $AUTO_INDEX -p $PORT $WEB_DIRECTORY > $LOG_DIRECTORY/$LOG_FILE &"
-				./$NODE_DIRECTORY/http-server/bin/http-server $FLAGS -d $DIRECTORY_LISTING -i $AUTO_INDEX -p $PORT $WEB_DIRECTORY > $LOG_DIRECTORY/$LOG_FILE &
-
-				if [ "$OPEN_BROWSER" == "true" ];
-				then
-					makeLogEntry "start" "python -mwebbrowser $PROTOCOL://$HOST:$PORT >/dev/null 2>&1"
-					python -mwebbrowser $PROTOCOL://$HOST:$PORT >/dev/null 2>&1
-				else
-					echo "Your site is running, direct your browser to $PROTOCOL://$HOST:$PORT"
-				fi
-			else
-				echo "You need to install the npm package http-server, npm install will install the requirements from package.json"
-			fi
-		else
-			echo "There are no node modules installed here, perhaps you need to run, npm install"
+			copyTemplate $TEMPLATE
 		fi
 	else
-		echo 'You need to install npm'
+		while true; do
+			read -p "Do you wish to copy web template ($TEMPLATE) over your current $WEB_DIRECTORY contents? [y/N]" yn
+			case $yn in
+				[Yy]* ) removeWeb; copyTemplate $TEMPLATE; break;;
+				[Nn]* ) break;;
+				* ) break;;
+			esac
+		done
 	fi
+
+	startService
+	startBrowser
 else
 	if [ "$PID" != "" ];
 	then

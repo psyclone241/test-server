@@ -59,3 +59,50 @@ function removeWeb {
     esac
   done
 }
+
+function startBrowser {
+  this_site="$PROTOCOL://$HOST:$PORT"
+  if [ "$OPEN_BROWSER" == "true" ];
+	then
+    echo "Starting browser to view your site at $this_site"
+    makeLogEntry "start" "python -mwebbrowser $his_site >/dev/null 2>&1"
+    python -m webbrowser $this_site >/dev/null 2>&1
+	else
+		echo "Your site is running, direct your browser to $this_site"
+	fi
+}
+
+function startService {
+  NPM_IS_INSTALLED=`program_is_installed npm`
+	if [ "$NPM_IS_INSTALLED" == "1" ];
+	then
+		if [ -d "$NODE_DIRECTORY" ];
+		then
+			HTTP_SERVER_IS_INSTALLED=`npm_package_is_installed $NODE_DIRECTORY http-server`
+			if [ "$HTTP_SERVER_IS_INSTALLED" == "1" ];
+			then
+				echo "Starting http-server instance at $PROTOCOL://$HOST:$PORT"
+				if [ "$PROTOCOL" == "http" ];
+				then
+					FLAGS=""
+				else
+					FLAGS="-S"
+				fi
+
+        makeLogEntry "start" "./$NODE_DIRECTORY/http-server/bin/http-server $FLAGS -d $DIRECTORY_LISTING -i $AUTO_INDEX -p $PORT $WEB_DIRECTORY > $LOG_DIRECTORY/$LOG_FILE &"
+        ./$NODE_DIRECTORY/http-server/bin/http-server $FLAGS -d $DIRECTORY_LISTING -i $AUTO_INDEX -p $PORT $WEB_DIRECTORY > $LOG_DIRECTORY/$LOG_FILE &
+			else
+				echo "You need to install the npm package http-server, npm install will install the requirements from package.json"
+			fi
+		else
+			echo "There are no node modules installed here, perhaps you need to run, npm install"
+		fi
+	else
+		echo 'You need to install npm'
+	fi
+}
+
+function stopService {
+  makeLogEntry "stop" "kill -9 $PID"
+  kill -9 $1
+}
