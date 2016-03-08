@@ -6,7 +6,7 @@ pid=`check_pid`
 test="Checking for active process [$HOST_SERVICE]"
 if [ "$pid" != "" ];
 then
-  respondInColor "$test" "3"
+  statusResponse "$test" "3"
 else
-  respondInColor "$test" "2"
+  statusResponse "$test" "2"
 fi

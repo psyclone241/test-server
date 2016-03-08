@@ -8,43 +8,43 @@ then
   source config.ini
 
   check=`checkValue "$LOG_DIRECTORY" "dir"`
-  respondInColor "Checking LOG_DIRECTORY [$LOG_DIRECTORY]" "$check"
+  statusResponse "Checking LOG_DIRECTORY [$LOG_DIRECTORY]" "$check"
 
   check=`checkValue "$LOG_DIRECTORY/$LOG_FILE" "file"`
-  respondInColor "Checking LOG_FILE [$LOG_DIRECTORY/$LOG_FILE]" "$check"
+  statusResponse "Checking LOG_FILE [$LOG_DIRECTORY/$LOG_FILE]" "$check"
 
   check=`checkValue "$LOG_DIRECTORY/$APP_LOG_FILE" "file"`
-  respondInColor "Checking APP_LOG_FILE [$LOG_DIRECTORY/$APP_LOG_FILE]" "$check"
+  statusResponse "Checking APP_LOG_FILE [$LOG_DIRECTORY/$APP_LOG_FILE]" "$check"
 
   check=`checkValue "$WEB_DIRECTORY"`
-  respondInColor "Checking WEB_DIRECTORY [$WEB_DIRECTORY]" "$check"
+  statusResponse "Checking WEB_DIRECTORY [$WEB_DIRECTORY]" "$check"
 
   check=`checkValue "$ACTIVE_SITE"`
-  respondInColor "Checking ACTIVE_SITE [$ACTIVE_SITE]" "$check"
+  statusResponse "Checking ACTIVE_SITE [$ACTIVE_SITE]" "$check"
 
   check=`checkValue "$TEMPLATE"`
-  respondInColor "Checking TEMPLATE [$TEMPLATE]" "$check"
+  statusResponse "Checking TEMPLATE [$TEMPLATE]" "$check"
 
   check=`checkValue "$NODE_DIRECTORY"`
-  respondInColor "Checking NODE_DIRECTORY [$NODE_DIRECTORY]" "$check"
+  statusResponse "Checking NODE_DIRECTORY [$NODE_DIRECTORY]" "$check"
 
   check=`checkValue "$PROTOCOL"`
-  respondInColor "Checking PROTOCOL [$PROTOCOL]" "$check"
+  statusResponse "Checking PROTOCOL [$PROTOCOL]" "$check"
 
   check=`checkValue "$HOST"`
-  respondInColor "Checking HOST [$HOST]" "$check"
+  statusResponse "Checking HOST [$HOST]" "$check"
 
   check=`checkValue "$PORT"`
-  respondInColor "Checking PORT [$PORT]" "$check"
+  statusResponse "Checking PORT [$PORT]" "$check"
 
   check=`checkValue "$DIRECTORY_LISTING"`
-  respondInColor "Checking DIRECTORY_LISTING [$DIRECTORY_LISTING]" "$check"
+  statusResponse "Checking DIRECTORY_LISTING [$DIRECTORY_LISTING]" "$check"
 
   check=`checkValue "$AUTO_INDEX"`
-  respondInColor "Checking AUTO_INDEX [$AUTO_INDEX]" "$check"
+  statusResponse "Checking AUTO_INDEX [$AUTO_INDEX]" "$check"
 
   check=`checkValue "$OPEN_BROWSER"`
-  respondInColor "Checking OPEN_BROWSER [$OPEN_BROWSER]" "$check"
+  statusResponse "Checking OPEN_BROWSER [$OPEN_BROWSER]" "$check"
 else
-  respondInColor "$test" "0"
+  statusResponse "$test" "0"
 fi

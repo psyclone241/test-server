@@ -1,9 +1,9 @@
 #!/usr/bin/env bash
 source scripts/config_check.sh
 
-echo "Checking for $HOST_SERVICE instance"
+respondInColor "${TXT_GREEN}" "Checking for $HOST_SERVICE instance"
 PID=`check_pid`
-echo "Checking for another process running on port $PORT"
+respondInColor "${TXT_GREEN}" "Checking for another process running on port $PORT"
 LIVE_PORT=`check_port`
 
 if [ "$PID" == "" ] && [ "$LIVE_PORT" == "" ];
@@ -27,15 +27,18 @@ then
 	fi
 
 	startService
-	startBrowser
+	if [ "$NO_START" != "true" ];
+	then
+		startBrowser
+	fi
 else
 	if [ "$PID" != "" ];
 	then
-		echo "There is already an http-server instance running at $PROTOCOL://$HOST:$PORT"
+		respondInColor "${TXT_RED}" "There is already an http-server instance running at $PROTOCOL://$HOST:$PORT"
 	fi
 
 	if [ "$LIVE_PORT" != "" ];
 	then
-		echo "There is another service on port $PORT -> $LIVE_PORT"
+		respondInColor "${TXT_RED}" "There is another service on port $PORT -> $LIVE_PORT"
 	fi
 fi

@@ -45,7 +45,7 @@ function check_port {
 function checkForDirectory {
   if [ ! -d "$1" ];
   then
-  	echo "Creating a directory at $1"
+  	respondInColor "${TXT_GREEN}" "Creating a directory at $1"
   	mkdir -p $1
     makeLogEntry "checkForDirectory" "mkdir -p $1"
   fi
@@ -54,7 +54,7 @@ function checkForDirectory {
 function checkForFile {
   if [ ! -f "$1" ];
   then
-  	echo "Creating a file at $1"
+  	respondInColor "${TXT_GREEN}" "Creating a file at $1"
   	touch $1
     makeLogEntry "checkForFile" "touch $1"
   fi
@@ -84,11 +84,11 @@ function startBrowser {
   this_site="$PROTOCOL://$HOST:$PORT"
   if [ "$OPEN_BROWSER" == "true" ];
 	then
-    echo "Starting browser to view your site at $this_site"
+    respondInColor "${TXT_GREEN}" "Starting browser to view your site at $this_site"
     makeLogEntry "start" "python -mwebbrowser $his_site >/dev/null 2>&1"
     python -m webbrowser $this_site >/dev/null 2>&1
 	else
-		echo "Your site is running, direct your browser to $this_site"
+		respondInColor "${TXT_GREEN}" "Your site is running, direct your browser to $this_site"
 	fi
 }
 
@@ -103,7 +103,7 @@ function startService {
   			HTTP_SERVER_IS_INSTALLED=`npm_package_is_installed $NODE_DIRECTORY http-server`
   			if [ "$HTTP_SERVER_IS_INSTALLED" == "1" ];
   			then
-  				echo "Starting http-server instance at $PROTOCOL://$HOST:$PORT"
+  				respondInColor "${TXT_GREEN}" "Starting http-server instance at $PROTOCOL://$HOST:$PORT"
   				if [ "$PROTOCOL" == "http" ];
   				then
   					FLAGS=""
@@ -114,13 +114,16 @@ function startService {
           makeLogEntry "start" "./$NODE_DIRECTORY/http-server/bin/http-server $FLAGS -d $DIRECTORY_LISTING -i $AUTO_INDEX -p $PORT $WEB_DIRECTORY > $LOG_DIRECTORY/$LOG_FILE &"
           ./$NODE_DIRECTORY/http-server/bin/http-server $FLAGS -d $DIRECTORY_LISTING -i $AUTO_INDEX -p $PORT $WEB_DIRECTORY >> $LOG_DIRECTORY/$LOG_FILE &
   			else
-  				echo "You need to install the npm package http-server, npm install will install the requirements from package.json"
+  				respondInColor "${TXT_RED}" "You need to install the npm package http-server, npm install will install the requirements from package.json"
+          NO_START=true
   			fi
   		else
-  			echo "There are no node modules installed here, perhaps you need to run, npm install"
+  			respondInColor "${TXT_RED}" "There are no node modules installed here, perhaps you need to run, npm install"
+        NO_START=true
   		fi
   	else
-  		echo 'You need to install npm'
+  		respondInColor "${TXT_RED}" "You need to install npm"
+      NO_START=true
   	fi
   elif [ "$HOST_SERVICE" == "pythonSimpleHTTPServer" ];
   then
@@ -128,11 +131,68 @@ function startService {
     cd $WEB_DIRECTORY
     python -m SimpleHTTPServer $PORT > /dev/null 2>&1 &
   else
-    echo "No service type was chosen, or selected option [$HOST_SERVICE] is not currently supported"
+    respondInColor "${TXT_RED}" "No service type was chosen, or selected option [$HOST_SERVICE] is not currently supported"
   fi
 }
 
 function stopService {
   makeLogEntry "stop" "kill -9 $PID"
   kill -9 $1
+}
+
+function statusResponse {
+  if [ "$2" == "1" ] || [ "$2" == "2" ];
+  then
+    color=${TXT_GREEN}
+    if [ "$2" == "1" ];
+    then
+      status="passed"
+    else
+      status="inactive"
+    fi
+  else
+    color=${TXT_RED}
+    if [ "$2" == "0" ];
+    then
+      status="failed"
+    else
+      status="active"
+    fi
+  fi
+
+  string1="${1}"
+  string2=`respondInColor "$color" "[$status]"`
+  #"[${color}$status${TXT_RESET}]"
+  printf "%-*s%*s\n" "$COL1" "$string1" "$COL2" "$string2"
+}
+
+function respondInColor {
+  echo -e "${1}$2${TXT_RESET}"
+}
+
+function checkValue {
+  if [ "$1" != "" ];
+  then
+    if [ "$2" == "dir" ];
+    then
+      if [ -d "$1" ];
+      then
+        echo "1"
+      else
+        echo "0"
+      fi
+    elif [ "$2" == "dir" ];
+    then
+      if [ -f "$1" ];
+      then
+        echo "1"
+      else
+        echo "0"
+      fi
+    else
+      echo "1"
+    fi
+  else
+    echo "0"
+  fi
 }
