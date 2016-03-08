@@ -7,14 +7,14 @@ then
   respondInColor "$test" "1"
   source config.ini
 
-  check=`checkValue "$LOG_DIRECTORY"`
+  check=`checkValue "$LOG_DIRECTORY" "dir"`
   respondInColor "Checking LOG_DIRECTORY [$LOG_DIRECTORY]" "$check"
 
-  check=`checkValue "$LOG_FILE"`
-  respondInColor "Checking LOG_FILE [$LOG_FILE]" "$check"
+  check=`checkValue "$LOG_DIRECTORY/$LOG_FILE" "file"`
+  respondInColor "Checking LOG_FILE [$LOG_DIRECTORY/$LOG_FILE]" "$check"
 
-  check=`checkValue "$APP_LOG_FILE"`
-  respondInColor "Checking APP_LOG_FILE [$APP_LOG_FILE]" "$check"
+  check=`checkValue "$LOG_DIRECTORY/$APP_LOG_FILE" "file"`
+  respondInColor "Checking APP_LOG_FILE [$LOG_DIRECTORY/$APP_LOG_FILE]" "$check"
 
   check=`checkValue "$WEB_DIRECTORY"`
   respondInColor "Checking WEB_DIRECTORY [$WEB_DIRECTORY]" "$check"

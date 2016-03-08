@@ -27,7 +27,25 @@ function respondInColor {
 function checkValue {
   if [ "$1" != "" ];
   then
-    echo "1"
+    if [ "$2" == "dir" ];
+    then
+      if [ -d "$1" ];
+      then
+        echo "1"
+      else
+        echo "0"
+      fi
+    elif [ "$2" == "dir" ];
+    then
+      if [ -f "$1" ];
+      then
+        echo "1"
+      else
+        echo "0"
+      fi
+    else
+      echo "1"
+    fi
   else
     echo "0"
   fi
