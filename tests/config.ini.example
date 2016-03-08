@@ -4,12 +4,7 @@ CONFIG_FILE='config.ini'
 LOG_DIRECTORY='logs'
 # The file used by this application to log what it is doing
 APP_LOG_FILE='app.log'
-# Code for Plain Green Text
-TXT_GREEN=$(tput setaf 2)
-# Code for Plain Red Text
-TXT_RED=$(tput setaf 1)
-# Code for resetting the color after use
-TXT_RESET=$(tput sgr0)
+
 # Define the COLUMNS for calculation
 COLUMNS=$(tput cols)
 # Left Side Column

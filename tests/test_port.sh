@@ -6,7 +6,7 @@ port=`check_port`
 test="Checking for active port [$PORT]"
 if [ "$port" != "" ];
 then
-  respondInColor "$test" "3"
+  statusResponse "$test" "3"
 else
-  respondInColor "$test" "2"
+  statusResponse "$test" "2"
 fi

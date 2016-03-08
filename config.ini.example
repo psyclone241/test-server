@@ -28,3 +28,11 @@ NODE_DIRECTORY="node_modules"
 DIRECTORY_LISTING=false
 # Automatically redirect to index.html
 AUTO_INDEX=true
+
+# These are some look and feel configuration options
+# Code for Plain Green Text
+TXT_GREEN=$(tput setaf 2)
+# Code for Plain Red Text
+TXT_RED=$(tput setaf 1)
+# Code for resetting the color after use
+TXT_RESET=$(tput sgr0)
