@@ -61,7 +61,6 @@ function checkForFile {
 }
 
 function makeLogEntry {
-  checkForDirectory "$LOG_DIRECTORY"
   date=`date +"%Y%m%d%H%M%S"`
   echo -e "[$date]\t\t[$1]\t\t$2" >> $LOG_DIRECTORY/$APP_LOG_FILE
 }
@@ -94,9 +93,6 @@ function startBrowser {
 }
 
 function startService {
-  checkForDirectory $LOG_DIRECTORY
-  checkForFile $LOG_DIRECTORY/$LOG_FILE
-
   if [ "$HOST_SERVICE" == "http-server" ];
   then
     NPM_IS_INSTALLED=`program_is_installed npm`

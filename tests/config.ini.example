@@ -2,6 +2,8 @@
 CONFIG_FILE='config.ini'
 # The directory where the log files are stored
 LOG_DIRECTORY='logs'
+# The file used by this application to log what it is doing
+APP_LOG_FILE='app.log'
 # Code for Plain Green Text
 TXT_GREEN=$(tput setaf 2)
 # Code for Plain Red Text
