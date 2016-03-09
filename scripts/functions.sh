@@ -62,7 +62,7 @@ function checkForFile {
 
 function makeLogEntry {
   date=`date +"%Y%m%d%H%M%S"`
-  echo -e "[$date]\t\t[$1]\t\t$2" >> $LOG_DIRECTORY/$APP_LOG_FILE
+  echo -e "[$date]\t\t[$1]\t\t$2" >> $APP_LOG_FILE
 }
 
 function copyTemplate {
@@ -112,7 +112,7 @@ function startService {
   				fi
 
           makeLogEntry "start" "./$NODE_DIRECTORY/http-server/bin/http-server $FLAGS -d $DIRECTORY_LISTING -i $AUTO_INDEX -p $PORT $WEB_DIRECTORY > $LOG_DIRECTORY/$LOG_FILE &"
-          ./$NODE_DIRECTORY/http-server/bin/http-server $FLAGS -d $DIRECTORY_LISTING -i $AUTO_INDEX -p $PORT $WEB_DIRECTORY >> $LOG_DIRECTORY/$LOG_FILE &
+          ./$NODE_DIRECTORY/http-server/bin/http-server $FLAGS -d $DIRECTORY_LISTING -i $AUTO_INDEX -p $PORT $WEB_DIRECTORY >> $LOG_FILE &
   			else
   				respondInColor "${TXT_RED}" "You need to install the npm package http-server, npm install will install the requirements from package.json"
           NO_START=true
@@ -127,7 +127,7 @@ function startService {
   	fi
   elif [ "$HOST_SERVICE" == "pythonSimpleHTTPServer" ];
   then
-    makeLogEntry "start" "cd $WEB_DIRECTORY; python -m SimpleHTTPServer $PORT > $LOG_DIRECTORY/$LOG_FILE 2>&1"
+    makeLogEntry "start" "cd $WEB_DIRECTORY; python -m SimpleHTTPServer $PORT > $LOG_FILE 2>&1"
     cd $WEB_DIRECTORY
     python -m SimpleHTTPServer $PORT > /dev/null 2>&1 &
   else
@@ -162,8 +162,15 @@ function statusResponse {
 
   string1="${1}"
   string2=`respondInColor "$color" "[$status]"`
-  #"[${color}$status${TXT_RESET}]"
   printf "%-*s%*s\n" "$COL1" "$string1" "$COL2" "$string2"
+}
+
+function respond {
+  echo -e "$1"
+}
+
+function makeLine {
+  printf '%*s\n' "${COLUMNS:-$(tput cols)}" '' | tr ' ' -
 }
 
 function respondInColor {
@@ -181,7 +188,7 @@ function checkValue {
       else
         echo "0"
       fi
-    elif [ "$2" == "dir" ];
+    elif [ "$2" == "file" ];
     then
       if [ -f "$1" ];
       then
@@ -194,5 +201,51 @@ function checkValue {
     fi
   else
     echo "0"
+  fi
+}
+
+function getIndex() {
+	index=0; while ((index<${#ARRAY[*]})); do
+		if [ "${ARRAY[$index]}" = "$1" ]; then
+			echo $index; return
+		fi
+	((index++)); done
+	echo 'Not Found'; return 1
+}
+
+function configCheckLoop {
+  if [ "${#check_array[@]}" != "0" ];
+  then
+    makeLine
+    respondInColor "${TXT_BLUE}" "CHECKING $check_title"
+    makeLine
+    for config_variable in "${check_array[@]}"
+    do
+      value=`eval echo '${'$config_variable'}'`
+      ARRAY=(${directory_values[@]})
+      is_directory=`getIndex "$config_variable"`
+      ARRAY=(${file_values[@]})
+      is_file=`getIndex "$config_variable"`
+
+      if [ "$is_directory" != 'Not Found' ];
+      then
+        check=`checkValue "$value" "dir"`
+        statusResponse "${testing_text}${config_variable} [${value}]" "$check"
+      fi
+
+      if [ "$is_file" != 'Not Found' ];
+      then
+        check=`checkValue "$value" "file"`
+        statusResponse "${testing_text}${config_variable} [${value}]" "$check"
+      fi
+
+      if [ "$is_file" == 'Not Found' ] && [ "$is_directory" == 'Not Found' ];
+      then
+        check=`checkValue "$value"`
+        statusResponse "${testing_text}${config_variable} [${value}]" "$check"
+      fi
+    done
+  else
+    respondInColor "${TXT_ORANGE}" "NO ITEMS IN $check_title"
   fi
 }

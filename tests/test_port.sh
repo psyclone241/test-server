@@ -3,7 +3,10 @@ source scripts/config_check.sh
 source tests/config_check.sh
 
 port=`check_port`
-test="Checking for active port [$PORT]"
+test="Active port [$PORT]"
+makeLine
+respondInColor "${TXT_BLUE}" "CHECKING DEFINED PORT"
+makeLine
 if [ "$port" != "" ];
 then
   statusResponse "$test" "3"
