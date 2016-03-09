@@ -1,13 +1,15 @@
 # Configuration file location
 CONFIG_FILE='config.ini'
 # The directory where the log files are stored
-LOG_DIRECTORY='logs'
+LOG_DIRECTORY='logs/'
+# The file used by the http-server to log traffic
+LOG_FILE=$LOG_DIRECTORY'http.log'
 # The file used by this application to log what it is doing
-APP_LOG_FILE='app.log'
+APP_LOG_FILE=$LOG_DIRECTORY'app.log'
 
 # Define the COLUMNS for calculation
 COLUMNS=$(tput cols)
 # Left Side Column
 COL1="60"
 # Right Side Column
-COL2=$(($COLUMNS - $COL1))
+COL2=$(($COLUMNS - $COL1 + 10))

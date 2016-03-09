@@ -1,50 +1,40 @@
 #!/usr/bin/env bash
 source tests/config_check.sh
-
 test="Configuration File [$CONFIG_FILE]"
+testing_text="Checking setting: "
 if [ -f "$CONFIG_FILE" ];
 then
-  respondInColor "$test" "1"
   source config.ini
+  respondInColor "${TXT_BLUE}" "LOADING CONFIGURATION FILE"
+  statusResponse "$test" "1"
 
-  check=`checkValue "$LOG_DIRECTORY" "dir"`
-  statusResponse "Checking LOG_DIRECTORY [$LOG_DIRECTORY]" "$check"
+  directory_values=( 'LOG_DIRECTORY' 'WEB_DIRECTORY' 'NODE_DIRECTORY' )
+  file_values=( 'LOG_FILE' 'APP_LOG_FILE' )
+  required_values=( 'LOG_DIRECTORY' 'LOG_FILE' 'APP_LOG_FILE' 'WEB_DIRECTORY' 'ACTIVE_SITE' 'TEMPLATE' 'PROTOCOL' 'HOST' 'PORT' 'HOST_SERVICE' )
+  optional_values=( 'DIRECTORY_LISTING' 'AUTO_INDEX' 'OPEN_BROWSER' )
+  conditional_values=( 'NODE_DIRECTORY' )
 
-  check=`checkValue "$LOG_DIRECTORY/$LOG_FILE" "file"`
-  statusResponse "Checking LOG_FILE [$LOG_DIRECTORY/$LOG_FILE]" "$check"
+  check_title="REQUIRED CONFIGURATION"
+  check_array=(${required_values[@]})
+  configCheckLoop
 
-  check=`checkValue "$LOG_DIRECTORY/$APP_LOG_FILE" "file"`
-  statusResponse "Checking APP_LOG_FILE [$LOG_DIRECTORY/$APP_LOG_FILE]" "$check"
+  check_title="OPTIONAL CONFIGURATION"
+  check_array=(${optional_values[@]})
+  configCheckLoop
 
-  check=`checkValue "$WEB_DIRECTORY"`
-  statusResponse "Checking WEB_DIRECTORY [$WEB_DIRECTORY]" "$check"
-
-  check=`checkValue "$ACTIVE_SITE"`
-  statusResponse "Checking ACTIVE_SITE [$ACTIVE_SITE]" "$check"
-
-  check=`checkValue "$TEMPLATE"`
-  statusResponse "Checking TEMPLATE [$TEMPLATE]" "$check"
-
-  check=`checkValue "$NODE_DIRECTORY"`
-  statusResponse "Checking NODE_DIRECTORY [$NODE_DIRECTORY]" "$check"
-
-  check=`checkValue "$PROTOCOL"`
-  statusResponse "Checking PROTOCOL [$PROTOCOL]" "$check"
-
-  check=`checkValue "$HOST"`
-  statusResponse "Checking HOST [$HOST]" "$check"
-
-  check=`checkValue "$PORT"`
-  statusResponse "Checking PORT [$PORT]" "$check"
-
-  check=`checkValue "$DIRECTORY_LISTING"`
-  statusResponse "Checking DIRECTORY_LISTING [$DIRECTORY_LISTING]" "$check"
-
-  check=`checkValue "$AUTO_INDEX"`
-  statusResponse "Checking AUTO_INDEX [$AUTO_INDEX]" "$check"
-
-  check=`checkValue "$OPEN_BROWSER"`
-  statusResponse "Checking OPEN_BROWSER [$OPEN_BROWSER]" "$check"
+  check_title="CONDITIONAL CONFIGURATION"
+  check_array=(${conditional_values[@]})
+  configCheckLoop
 else
+  # Code for Success (green) Text
+  TXT_GREEN=$(tput setaf 2)
+  # Code for Danger (red) Text
+  TXT_RED=$(tput setaf 1)
+  # Code for Information (cyan) Text
+  TXT_BLUE=$(tput setaf 6)
+  # Code for Warning (orange) Text
+  TXT_ORANGE=$(tput setaf 3)
+  # Code for resetting the color after use
+  TXT_RESET=$(tput sgr0)
   statusResponse "$test" "0"
 fi

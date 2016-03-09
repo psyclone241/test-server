@@ -3,7 +3,10 @@ source scripts/config_check.sh
 source tests/config_check.sh
 
 pid=`check_pid`
-test="Checking for active process [$HOST_SERVICE]"
+test="Active process [$HOST_SERVICE]"
+makeLine
+respondInColor "${TXT_BLUE}" "CHECKING DEFINED PROCESS"
+makeLine
 if [ "$pid" != "" ];
 then
   statusResponse "$test" "3"
