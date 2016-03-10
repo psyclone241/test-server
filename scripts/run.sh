@@ -49,6 +49,9 @@ then
       cp tests/config.ini.example tests/config.ini
     fi
   fi
+elif [ "$command_chosen" == "browse" ];
+then
+    startBrowser
 else
   respondInColor "${TXT_RED}" "No command by that name"
 fi

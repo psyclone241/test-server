@@ -34,5 +34,8 @@ port:
 pid:
 	@bash scripts/run.sh pid
 
+browse:
+		@bash scripts/run.sh browse
+
 test:
 	@bash tests/run.sh
