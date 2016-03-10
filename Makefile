@@ -11,6 +11,8 @@ help:
 	@echo "\trestart - find and kill the service instance, then start a new one"
 	@echo "\tport - find any services running on the configured por"
 	@echo "\tpid - find the PID of any service instance running"
+	@echo "\tbrowse - open the python default web browser to your site"
+	@echo "\cpanel - open the web control panel for these scripts"
 	@echo "\ttest - run the testing suites"
 
 config:
@@ -33,6 +35,12 @@ port:
 
 pid:
 	@bash scripts/run.sh pid
+
+browse:
+		@bash scripts/run.sh browse
+
+cpanel:
+		@bash scripts/run.sh cpanel
 
 test:
 	@bash tests/run.sh

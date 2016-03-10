@@ -30,6 +30,10 @@ then
   else
     statusResponse "${npm_test}" "$NPM_IS_INSTALLED"
   fi
+elif [ "$HOST_SERVICE" == "pythonSimpleHTTPServer" ];
+then
+  PYTHON_IS_INSTALLED=`program_is_installed pyton`
+  statusResponse "Installation of python" "$PYTHON_IS_INSTALLED"
 else
   statusResponse "Missing HOST_SERVICE or invalid [$HOST_SERVICE]" "0"
 fi

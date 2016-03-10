@@ -81,11 +81,17 @@ function removeWeb {
 }
 
 function startBrowser {
-  this_site="$PROTOCOL://$HOST:$PORT"
+  if [ "$1" != "" ];
+  then
+    this_site=$1
+  else
+    this_site="$PROTOCOL://$HOST:$PORT"
+  fi
+
   if [ "$OPEN_BROWSER" == "true" ];
 	then
-    respondInColor "${TXT_GREEN}" "Starting browser to view your site at $this_site"
-    makeLogEntry "start" "python -mwebbrowser $his_site >/dev/null 2>&1"
+    respondInColor "${TXT_GREEN}" "Pointing your default web browser to $this_site"
+    makeLogEntry "start" "python -mwebbrowser $this_site >/dev/null 2>&1"
     python -m webbrowser $this_site >/dev/null 2>&1
 	else
 		respondInColor "${TXT_GREEN}" "Your site is running, direct your browser to $this_site"
