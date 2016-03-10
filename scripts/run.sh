@@ -52,6 +52,9 @@ then
 elif [ "$command_chosen" == "browse" ];
 then
     startBrowser
+elif [ "$command_chosen" == "cpanel" ];
+then
+    startBrowser $CONTROL_CONFIG
 else
   respondInColor "${TXT_RED}" "No command by that name"
 fi
