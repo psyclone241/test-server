@@ -1,24 +1,39 @@
 # Introduction
 
-  * Just a little test project, implementing the node project, http-server by default, but it can also be used to setup a test service with the python SimpleHTTPServer
+  * Just a little test project, to serve HTML or Markdown using node type web servers or simply using python SimpleHTTPServer
 
-# Requirements (if default http-server used)
+## Requirements
+
+### Using http-server
 
   * npm
   * npm packages:
     * http-server
   * make
 
-# Requirements (if python service used)
+### Using harp
+
+  * npm
+  * npm packages:
+    * harp
+  * make
+
+### Using python SimpleHTTPServer
 
   * make
   * python (version >= 2.7)
 
-# Installation (if default http-server used)
+## Installation
+
+### Using http-server
 
   * <pre>$ npm install</pre>
 
-# Installation (if python service used)
+### Using harp
+
+  * <pre>$ npm install</pre>
+
+### Using python SimpleHTTPServer
 
   * There is no pre-use install for this option
 
