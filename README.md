@@ -1,7 +1,6 @@
 # Introduction
 
-Just a little test project, to be able to quickly serve HTML or Markdown, using
-a number of node based tools, or simply using python's SimpleHTTPServer.
+  * Just a little test project, implementing the node project, http-server by default, but it can also be used to setup a test service with the python SimpleHTTPServer
 
 # Requirements (if default http-server used)
 
@@ -10,23 +9,12 @@ a number of node based tools, or simply using python's SimpleHTTPServer.
     * http-server
   * make
 
-# Requirements (if harp used)
-
-  * npm
-  * npm packages:
-    * harp
-  * make
-
 # Requirements (if python service used)
 
   * make
   * python (version >= 2.7)
 
 # Installation (if default http-server used)
-
-  * <pre>$ npm install</pre>
-
-# Installation (if harp used)
 
   * <pre>$ npm install</pre>
 
