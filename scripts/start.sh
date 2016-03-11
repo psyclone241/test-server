@@ -34,7 +34,7 @@ then
 else
 	if [ "$PID" != "" ];
 	then
-		respondInColor "${TXT_RED}" "There is already an http-server instance running at $PROTOCOL://$HOST:$PORT"
+		respondInColor "${TXT_RED}" "There is already a $HOST_SERVICE instance running at $PROTOCOL://$HOST:$PORT"
 	fi
 
 	if [ "$LIVE_PORT" != "" ];

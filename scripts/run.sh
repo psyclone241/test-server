@@ -24,7 +24,7 @@ then
   then
     respondInColor "${TXT_GREEN}" "$PID"
   else
-    respondInColor "${TXT_RED}" "No http-server running"
+    respondInColor "${TXT_RED}" "No $HOST_SERVICE running"
   fi
 elif [ "$command_chosen" == "config" ] || [ "$command_chosen" == "testconfig" ];
 then

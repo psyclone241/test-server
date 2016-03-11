@@ -17,6 +17,7 @@ PROTOCOL='http'
 # Host name, used simple for logging at this time
 HOST='localhost'
 # Port number, duh!
+# If you are using the HOST_SERVICE 'harp' do not set the port to 8080 (it seems not to like that)
 PORT=8080
 # Open a web browser automatically after spawning the service
 OPEN_BROWSER=true

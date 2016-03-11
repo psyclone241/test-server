@@ -1,54 +1,76 @@
-# Introduction
-Just a little test project, implementing the node project, http-server by default,
-but it can also be used to setup a test service with the python SimpleHTTPServer
+## Introduction
 
-# Requirements (if default http-server used)
-* npm
-* npm packages:
-  * http-server
-* make
+  * Just a little test project, to serve HTML or Markdown using node type web servers or simply using python SimpleHTTPServer
 
-# Requirements (if python service used)
-* make
-* python (version >= 2.7)
+## Requirements
 
-# Installation (if default http-server used)
-$ npm install
+### Using http-server
 
-# Installation (if python service used)
-* There is no pre-use install for this option
+  * npm
+  * npm packages:
+    * http-server
+  * make
+
+### Using harp
+
+  * npm
+  * npm packages:
+    * harp
+  * make
+
+### Using python SimpleHTTPServer
+
+  * make
+  * python (version >= 2.7)
+
+## Installation
+
+### Using http-server
+
+  * <pre>$ npm install</pre>
+
+### Using harp
+
+  * <pre>$ npm install</pre>
+
+### Using python SimpleHTTPServer
+
+  * There is no pre-use install for this option
 
 # Configuration
-* Copy config.ini.example to config.ini
-$ cp config.ini.example config.ini
-* Edit your new config.ini file for your preferences
+
+  * Copy config.ini.example to config.ini
+  $ cp config.ini.example config.ini
+  * Edit your new config.ini file for your preferences
 
 # Usage
-* Show your options
-  $ make
-* Configure your server or create a new config
-  $ make config
-* Configure your test suite or create a new test config
-  $ make testconfig
-* Run your server
-  $ make start
-* Stop your server
-  $ make stop
-* Restart your server
-  $ make restart
-* Show the PID for the active server
-  $ make pid
-* Show any service on the port specified in config.ini
-  $ make port
-* Open the default browser with python, to your server
-  $ make browse
+
+  * Show your options
+    <pre>$ make</pre>
+  * Configure your server or create a new config
+    <pre>$ make config</pre>
+  * Configure your test suite or create a new test config
+    <pre>$ make testconfig</pre>
+  * Run your server
+    <pre>$ make start</pre>
+  * Stop your server
+    <pre>$ make stop</pre>
+  * Restart your server
+    <pre>$ make restart</pre>
+  * Show the PID for the active server
+    <pre>$ make pid</pre>
+  * Show any service on the port specified in config.ini
+    <pre>$ make port</pre>
+  * Open the default browser with python, to your server
+    <pre>$ make browse</pre>
 
 # Testing
-* Run full test suite
-  $ make test
+
+  * Run full test suite
+    <pre>$ make test</pre>
 
 # TODO List
-* Make configuration editor inside of 'make config'
-* Make configuration editor inside of 'make testconfig'
-* Add testing for each individual method, so that they can be run
-independent of 'make test'
+
+  * Make configuration editor inside of 'make config'
+  * Make configuration editor inside of 'make testconfig'
+  * Add testing for each individual method, so that they can be run independent of 'make test'
