@@ -1,4 +1,4 @@
-# Introduction
+## Introduction
 
   * Just a little test project, to serve HTML or Markdown using node type web servers or simply using python SimpleHTTPServer
 
