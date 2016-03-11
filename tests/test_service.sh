@@ -5,7 +5,7 @@ source tests/config_check.sh
 makeLine
 respondInColor "${TXT_BLUE}" "CHECKING DEFINED SERVICE"
 makeLine
-if [ "$HOST_SERVICE" == "http-server" ];
+if [ "$HOST_SERVICE" == "http-server" ] || [ "$HOST_SERVICE" == "harp" ];
 then
   NPM_IS_INSTALLED=`program_is_installed npm`
   npm_test="Installation of [npm]"
@@ -16,13 +16,13 @@ then
     if [ -d "$NODE_DIRECTORY" ];
     then
       statusResponse "${directory_test}" "1"
-      HTTP_SERVER_IS_INSTALLED=`npm_package_is_installed $NODE_DIRECTORY http-server`
-      http_server_test="Installation of [http-server]"
+      NODE_TYPE_SERVER_IS_INSTALLED=`npm_package_is_installed $NODE_DIRECTORY $HOST_SERVICE`
+      node_type_server_test="Installation of [$HOST_SERVICE]"
       if [ "$HTTP_SERVER_IS_INSTALLED" == "1" ];
       then
-        statusResponse "${http_server_test}" "$HTTP_SERVER_IS_INSTALLED"
+        statusResponse "${node_type_server_test}" "$NODE_TYPE_SERVER_IS_INSTALLED"
       else
-        statusResponse "${http_server_test}" "$HTTP_SERVER_IS_INSTALLED"
+        statusResponse "${node_type_server_test}" "$NODE_TYPE_SERVER_IS_INSTALLED"
       fi
     else
       statusResponse "${directory_test}" "0"

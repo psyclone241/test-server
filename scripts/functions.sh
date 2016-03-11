@@ -22,6 +22,14 @@ function check_pid {
     then
       echo $PID
     fi
+  elif [ "$HOST_SERVICE" == "harp" ];
+  then
+    makeLogEntry "check_pid" "ps aux | grep "[h]arp" | awk '{print $2}'"
+    PID=`ps aux | grep "[h]arp" | awk '{print $2}'`
+    if [ "$PID" != "" ];
+    then
+      echo $PID
+    fi
   elif [ "$HOST_SERVICE" == "pythonSimpleHTTPServer" ];
   then
     makeLogEntry "check_pid" "ps aux | grep "[S]impleHTTPServer" | awk '{print $2}'"
@@ -99,17 +107,17 @@ function startBrowser {
 }
 
 function startService {
-  if [ "$HOST_SERVICE" == "http-server" ];
+  if [ "$HOST_SERVICE" == "http-server" ] || [ "$HOST_SERVICE" == "harp" ];
   then
     NPM_IS_INSTALLED=`program_is_installed npm`
   	if [ "$NPM_IS_INSTALLED" == "1" ];
   	then
   		if [ -d "$NODE_DIRECTORY" ];
   		then
-  			HTTP_SERVER_IS_INSTALLED=`npm_package_is_installed $NODE_DIRECTORY http-server`
-  			if [ "$HTTP_SERVER_IS_INSTALLED" == "1" ];
+  			NODE_TYPE_SERVER_IS_INSTALLED=`npm_package_is_installed $NODE_DIRECTORY $HOST_SERVICE`
+  			if [ "$NODE_TYPE_SERVER_IS_INSTALLED" == "1" ];
   			then
-  				respondInColor "${TXT_GREEN}" "Starting http-server instance at $PROTOCOL://$HOST:$PORT"
+  				respondInColor "${TXT_GREEN}" "Starting $HOST_SERVICE instance at $PROTOCOL://$HOST:$PORT"
   				if [ "$PROTOCOL" == "http" ];
   				then
   					FLAGS=""
@@ -117,10 +125,17 @@ function startService {
   					FLAGS="-S"
   				fi
 
-          makeLogEntry "start" "./$NODE_DIRECTORY/http-server/bin/http-server $FLAGS -d $DIRECTORY_LISTING -i $AUTO_INDEX -p $PORT $WEB_DIRECTORY > $LOG_DIRECTORY/$LOG_FILE &"
-          ./$NODE_DIRECTORY/http-server/bin/http-server $FLAGS -d $DIRECTORY_LISTING -i $AUTO_INDEX -p $PORT $WEB_DIRECTORY >> $LOG_FILE &
+          if [ "$HOST_SERVICE" == "http-server" ];
+          then
+            makeLogEntry "start" "./$NODE_DIRECTORY/http-server/bin/http-server $FLAGS -d $DIRECTORY_LISTING -i $AUTO_INDEX -p $PORT $WEB_DIRECTORY > $LOG_DIRECTORY/$LOG_FILE &"
+            ./$NODE_DIRECTORY/http-server/bin/http-server $FLAGS -d $DIRECTORY_LISTING -i $AUTO_INDEX -p $PORT $WEB_DIRECTORY >> $LOG_FILE &
+          elif [ "$HOST_SERVICE" == "harp" ];
+          then
+            makeLogEntry "start" "./$NODE_DIRECTORY/harp/bin/harp server $WEB_DIRECTORY --port $PORT > $LOG_DIRECTORY/$LOG_FILE &"
+            ./$NODE_DIRECTORY/harp/bin/harp server $WEB_DIRECTORY --port $PORT >> $LOG_FILE &
+          fi
   			else
-  				respondInColor "${TXT_RED}" "You need to install the npm package http-server, npm install will install the requirements from package.json"
+  				respondInColor "${TXT_RED}" "You need to install the npm package $HOST_SERVICE, npm install will install the requirements from package.json"
           NO_START=true
   			fi
   		else
